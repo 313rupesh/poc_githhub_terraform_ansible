@@ -1,13 +1,13 @@
 terraform {
   backend "gcs" {
-    bucket = "tf-states-demo"  # create gs://tf-states-demo
+    bucket = "sinuous-mind-384104"  # create gs://tf-states-demo
     prefix = "terraform/state" # create folders "terraform/state" --> gs://tf-states-demo/terraform/state/
     ######## On run "Terraform init", TF will put default state at gs://tf-states-demo/terraform/state/default.tfstate 
     #credentials = "zinc-arc-396916-9d8a70ea2239.json"   # this is needed if you run from local TF CLI
   }
 }
 provider "google" {
-  project     = "zinc-arc-396916"
+  project     = "sinuous-mind-384104"
   # credentials = file(var.credentials_file)  # this is needed if you run from local TF CLI
   region      = var.region
   zone        = "us-west4-a" //us-centra1-c
@@ -31,7 +31,7 @@ resource "google_compute_instance" "my-first-vm" {
 variable "credentials_file" {
   type        = string
   description = "credentials"
-  default     = "zinc-arc-396916-9d8a70ea2239.json"
+  default     = "sinuous-mind-384104-25030839f4b3.json"
 }
 variable "region" {
   type        = string
