@@ -26,6 +26,23 @@ resource "google_compute_instance" "my-first-vm" {
     access_config {
     }
   }
+
+  provisioner "remote-exec" {
+  inline =["echo 'Wait untill SSH is ready'"]
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = file(var.credentials_file)
+    #host     = self.public_ip
+    host    = var.nginx_ip
+  }
+
+}
+
+  provisioner "local-exec" {
+    #command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
+    command = "ansible-playbook -i var.nginx_ip, -i --private-key file(var.credentials_file) nginx.yaml"
+  }
 }
 
 output "nginx_ip" {
@@ -53,22 +70,7 @@ locals {
   }
 }
 
-provisioner "remote-exec" {
-  inline =["echo 'Wait untill SSH is ready'"]
-  connection {
-    type     = "ssh"
-    user     = "root"
-    password = file(var.credentials_file)
-    #host     = self.public_ip
-    host    = var.nginx_ip
-  }
 
-}
-
-provisioner "local-exec" {
-  #command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
-  command = "ansible-playbook -i var.nginx_ip, -i --private-key file(var.credentials_file) nginx.yaml"
-}
 
 
 
