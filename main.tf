@@ -28,10 +28,14 @@ resource "google_compute_instance" "my-first-vm" {
   }
 }
 
+output "nginx_ip" {
+  value = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
+}
+
 variable "credentials_file" {
   type        = string
   description = "credentials"
-  default     = "sinuous-mind-384104-25030839f4b3.json"
+  default     = "sinuous-mind-384104-ca1a8158457e.json"
 }
 variable "region" {
   type        = string
@@ -49,7 +53,22 @@ locals {
   }
 }
 
+provisioner "remote-exec" {
+  inline =["echo 'Wait untill SSH is ready'"]
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = file(var.credentials_file)
+    #host     = self.public_ip
+    host    = var.nginx_ip
+  }
 
+}
+
+provisioner "local-exec" {
+  #command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
+  command = "ansible-playbook -i var.nginx_ip, -i --private-key file(var.credentials_file) nginx.yaml"
+}
 
 
 
