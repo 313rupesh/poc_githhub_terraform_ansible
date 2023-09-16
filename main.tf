@@ -34,7 +34,7 @@ resource "google_compute_instance" "my-first-vm" {
     user     = "root"
     password = file(var.credentials_file)
     #host     = self.public_ip
-    host    = var.nginx_ip
+    host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
   }
 
 }
