@@ -25,10 +25,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
-    # Install the latest version of Ansible
-    - name: Setup Ansible
-      uses: arillso/action.playbook@0.0.5
-    
+ 
     - name: Debug Credentials2
       run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
       
