@@ -55,3 +55,7 @@ jobs:
       run: terraform apply -auto-approve
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    # Install the latest version of Ansible
+    - name: Setup Ansible
+      uses: ansible/ansible-lint@main
