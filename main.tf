@@ -31,8 +31,8 @@ resource "google_compute_instance" "my-first-vm" {
   inline =["echo 'Wait untill SSH is ready'"]
   connection {
     type     = "ssh"
-    user     = "root"
-    password = file(var.credentials_file)
+    user     = local.ssh_user
+    password = file(local.private_key_path)
     #host     = self.public_ip
     host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
   }
@@ -41,7 +41,7 @@ resource "google_compute_instance" "my-first-vm" {
 
   provisioner "local-exec" {
     #command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
-    command = "ansible-playbook -i var.nginx_ip, -i --private-key file(var.credentials_file) nginx.yaml"
+    command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
   }
 }
 
@@ -52,7 +52,7 @@ output "nginx_ip" {
 variable "credentials_file" {
   type        = string
   description = "credentials"
-  default     = "sinuous-mind-384104-ca1a8158457e.json"
+  default     = "sinuous-mind-384104-c8d17b9d3f16.json"
 }
 variable "region" {
   type        = string
@@ -64,6 +64,8 @@ locals {
   instance_zone = "us-central1-a"
   machine_type  = "e2-medium"
   image         = "ubuntu-os-cloud/ubuntu-2004-lts"
+  ssh_user      = "ansible"
+  private_key_path = "certificate"
   instance_labels = {
     env = "dev"
     app = "web"
