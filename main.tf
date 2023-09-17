@@ -39,7 +39,7 @@ resource "google_compute_instance" "my-first-vm" {
     type     = "ssh"
     user     = local.ssh_user
     port     = 22
-    password = "${file("${local.private_key_path}")}"
+    private_key  = "${file("${local.private_key_path}")}"
     #host     = self.public_ip
     host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
     timeout = "200s"
