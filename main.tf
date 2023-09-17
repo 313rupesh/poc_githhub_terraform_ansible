@@ -34,11 +34,12 @@ resource "google_compute_instance" "my-first-vm" {
     }
 
   provisioner "remote-exec" {
-  inline =["echo 'Wait untill SSH is ready'"]
+  inline =["echo 'Wait untill SSH is ready rupesh'"]
   connection {
     type     = "ssh"
     user     = local.ssh_user
-    password = file(local.private_key_path)
+    port     = 22
+    password = "${file("${local.private_key_path}")}"
     #host     = self.public_ip
     host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
   }
