@@ -48,8 +48,8 @@ resource "google_compute_instance" "my-first-vm" {
 }
 
   provisioner "local-exec" {
-    #command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
-    command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
+    command = "ansible-playbook -i ${var.nginx_ip}, -i --private-key ${local.private_key_path} nginx.yaml"
+    #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
   }
 }
 
