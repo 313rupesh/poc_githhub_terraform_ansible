@@ -27,31 +27,33 @@ resource "google_compute_instance" "my-first-vm" {
     }
   }
 
-    metadata = {
-    "ssh-keys" = <<EOT
-      ansible:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgx9mknOH6XeYdrHw2aZkub8jcApKAG6UsZMCqNv+bj ansible
-      EOT
-    }
+  metadata = {
+  "ssh-keys" = <<EOT
+    ansible:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgx9mknOH6XeYdrHw2aZkub8jcApKAG6UsZMCqNv+bj ansible
+    EOT
+  }
+
+  metadata_startup_script =  "sudo apt-get update; sudo apt-get install -y nginx; sudo systemctl start nginx"      
 
   provisioner "remote-exec" {
   inline =["echo 'Wait untill SSH is ready rupesh'"]
-  connection {
-    type     = "ssh"
-    user     = local.ssh_user
-    port     = 22
-    private_key  = "${file("${local.private_key_path}")}"
-    #host     = self.public_ip
-    host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
-    timeout = "200s"
-  }
-
-}
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} nginx.yaml"
-    #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
+    connection {
+      type     = "ssh"
+      user     = local.ssh_user
+      port     = 22
+      private_key  = "${file("${local.private_key_path}")}"
+      #host     = self.public_ip
+      host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
+      timeout = "200s"
+    }
   }
 }
+
+#   provisioner "local-exec" {
+#     command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} ./nginx.yaml"
+#     #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
+#   }
+# }
 
 output "nginx_ip" {
   value = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
