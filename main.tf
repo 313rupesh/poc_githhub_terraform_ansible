@@ -27,6 +27,12 @@ resource "google_compute_instance" "my-first-vm" {
     }
   }
 
+    metadata = {
+    "ssh-keys" = <<EOT
+      dev:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgx9mknOH6XeYdrHw2aZkub8jcApKAG6UsZMCqNv+bj ansible
+      EOT
+    }
+
   provisioner "remote-exec" {
   inline =["echo 'Wait untill SSH is ready'"]
   connection {
@@ -65,7 +71,7 @@ locals {
   machine_type  = "e2-medium"
   image         = "ubuntu-os-cloud/ubuntu-2004-lts"
   ssh_user      = "ansible"
-  private_key_path = "certificate"
+  private_key_path = "./certificate"
   instance_labels = {
     env = "dev"
     app = "web"
