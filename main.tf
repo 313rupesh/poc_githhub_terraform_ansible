@@ -42,6 +42,7 @@ resource "google_compute_instance" "my-first-vm" {
     password = "${file("${local.private_key_path}")}"
     #host     = self.public_ip
     host    = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
+    timeout = "200s"
   }
 
 }
