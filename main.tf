@@ -29,7 +29,7 @@ resource "google_compute_instance" "my-first-vm" {
 
     metadata = {
     "ssh-keys" = <<EOT
-      dev:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgx9mknOH6XeYdrHw2aZkub8jcApKAG6UsZMCqNv+bj ansible
+      ansible:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgx9mknOH6XeYdrHw2aZkub8jcApKAG6UsZMCqNv+bj ansible
       EOT
     }
 
