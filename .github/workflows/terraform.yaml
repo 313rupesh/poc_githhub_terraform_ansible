@@ -26,8 +26,6 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
           # Install the latest version of Ansible
-    - name: Setup Ansible
-      uses: ansible/ansible-lint@main
  
     - name: Debug Credentials2
       run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
