@@ -79,7 +79,7 @@ variable "credentials_file" {
 variable "ssh_private_key" {
   type        = string
   description = "credentials"
-  default     = "new_pri_key.ppk"
+  default     = "./new_pri_key.ppk"
 }
 variable "region" {
   type        = string
