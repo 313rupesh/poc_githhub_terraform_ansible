@@ -33,7 +33,7 @@ resource "google_compute_instance" "my-first-vm" {
     EOT
   }
 
-  metadata_startup_script =  "sudo apt-get update; sudo apt-get install -y nginx; sudo systemctl start nginx"      
+  #metadata_startup_script =  "sudo apt-get update; sudo apt-get install -y nginx; sudo systemctl start nginx"      
 
   provisioner "remote-exec" {
   inline =["echo 'Wait untill SSH is ready rupesh'"]
@@ -47,13 +47,13 @@ resource "google_compute_instance" "my-first-vm" {
       timeout = "200s"
     }
   }
-}
 
-#   provisioner "local-exec" {
-#     command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} ./nginx.yaml"
-#     #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
-#   }
-# }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --private-key ${local.private_key_path} ./nginx.yaml"
+    #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
+  }
+}
 
 output "nginx_ip" {
   value = google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip
@@ -62,7 +62,7 @@ output "nginx_ip" {
 variable "credentials_file" {
   type        = string
   description = "credentials"
-  default     = "sinuous-mind-384104-c8d17b9d3f16.json"
+  default     = "sinuous-mind-384104-ebf693f84726.json"
 }
 variable "region" {
   type        = string
