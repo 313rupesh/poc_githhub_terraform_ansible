@@ -1,6 +1,8 @@
 ---
 - name: 'Install Nginx'
   hosts: all
+  vars:
+    ansible_ssh_private_key_file: ./new_pri_key.ppk
   remote_user: ansible
   become: yes
   roles:
