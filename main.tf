@@ -13,7 +13,7 @@ provider "google" {
   zone        = "us-west4-a" //us-centra1-c
 }
 
-resources "google_compute_firewall" "allow-connection" {
+resource "google_compute_firewall" "allow-connection" {
   name     =   "allow-connection"
   network  =  "default"
   allow {
