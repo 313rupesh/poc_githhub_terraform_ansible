@@ -92,7 +92,7 @@ locals {
   machine_type  = "e2-medium"
   image         = "ubuntu-os-cloud/ubuntu-2004-lts"
   ssh_user      = "ansible"
-  private_key_path = "certificate"
+  private_key_path = "./certificate"
   #private_key_path = "./new_pri_key.ppk"
   instance_labels = {
     env = "dev"

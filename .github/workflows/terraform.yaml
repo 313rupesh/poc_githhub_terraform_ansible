@@ -28,6 +28,9 @@ jobs:
           # Install the latest version of Ansible
     - name: Install Ansible
       run: sudo apt update && sudo apt install -y ansible
+      env:
+        #ANSIBLE_HOST_KEY_CHECKING: False  # Disable host key checking for simplicity
+        ANSIBLE_CONFIG: ./.github/workflows/roles/ansible.cfg
       
     - name: Debug Credentials2
       run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
