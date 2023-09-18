@@ -47,7 +47,8 @@ resource "google_compute_instance" "my-first-vm" {
     EOT
   }
 
-  #metadata_startup_script =  "sudo apt-get update; sudo apt-get install -y nginx; sudo systemctl start nginx"      
+  #metadata_startup_script =  "sudo apt-get update; sudo apt-get install -y nginx; sudo systemctl start nginx"   
+  metadata_startup_script =  "sudo apt-get update"    
 
   provisioner "remote-exec" {
   inline =["echo 'Wait untill SSH is ready rupesh'"]
