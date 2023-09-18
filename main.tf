@@ -60,7 +60,7 @@ resource "google_compute_instance" "my-first-vm" {
 
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --key-file ${local.private_key_path} ./.github/workflows/roles/nginx.yml"
+    command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --key-file ${var.ssh_private_key} ./.github/workflows/roles/nginx.yml"
     #command = "ansible-playbook -i ${google_compute_instance.my-first-vm.network_interface.0.access_config.0.nat_ip}, --key-file ${file("${local.private_key_path}")} ./.github/workflows/roles/nginx.yml"
     #command = "ansible-playbook -i var.nginx_ip, -i --private-key ${local.private_key_path} nginx.yaml"
   }
@@ -74,6 +74,12 @@ variable "credentials_file" {
   type        = string
   description = "credentials"
   default     = "sinuous-mind-384104-ebf693f84726.json"
+}
+
+variable "ssh_private_key" {
+  type        = string
+  description = "credentials"
+  default     = "new_pri_key.ppk"
 }
 variable "region" {
   type        = string
