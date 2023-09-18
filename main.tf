@@ -13,6 +13,16 @@ provider "google" {
   zone        = "us-west4-a" //us-centra1-c
 }
 
+resources "google_compute_firewall" "allow-connection" {
+  name     =   "allow-connection"
+  network  =  "default"
+  allow {
+   protocol  = "tcp"
+   ports     = ["22"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+}
+
 resource "google_compute_instance" "my-first-vm" {
   name         = local.instance_name
   machine_type = local.machine_type
